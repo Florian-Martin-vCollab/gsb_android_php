@@ -44,7 +44,7 @@ if ($operation) {
             print "Connexion%";
             logIn($mPDO);
         } catch (PDOException $ex) {
-            print "Erreur lors de l'authentification : %" . $ex->getMessage();
+            print "Erreur%" . $ex->getMessage();
         }
     }
 
@@ -58,8 +58,10 @@ if ($operation) {
             $lesDonnees = filter_input(INPUT_POST, "listeFrais");
             $idVisiteur = filter_input(INPUT_POST, "id", FILTER_SANITIZE_STRING);
             $lesFrais = json_decode($lesDonnees, true);
-
+            $tabFraisTraites = [];
+            
             foreach ($lesFrais as $frais) {
+                
                 $unFrais = [
                     "annee" => $frais['annee'],
                     "mois" => $frais['mois'],
@@ -158,7 +160,9 @@ if ($operation) {
                                         $dateHf);
                     }
                 }
+                $tabFraisTraites[] = $dateFrais;
             }
+            print json_encode($tabFraisTraites);
         } catch (PDOException $ex) {
             print "Erreur%" . $ex->getMessage();
         }
@@ -247,7 +251,7 @@ function updateLigneFraisForfaitise($mPDO, $idVisiteur, $dateFrais, $unTypeDeFra
                                     $qteFrais) 
 {
     $requete = $mPDO->prepare(
-            "UPDATE lignefraisforfait "
+            "UPDATE lgnefraisforfait "
             . "SET quantite = :qteFrais "
             . "WHERE idvisiteur = :idVisiteur "
             . "AND mois = :dateFrais "

@@ -17,7 +17,7 @@ function connexionPDO() {
         $myPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $myPDO;
     } catch (PDOException $e) {
-        echo 'Connexion échouée : ' . $e->getMessage();
+        print "Erreur%" . $e->getMessage();
         die();
     }
 }
