@@ -164,7 +164,7 @@ if ($operation) {
             }
             print json_encode($tabFraisTraites);
         } catch (PDOException $ex) {
-            print "Erreur%" . $ex->getMessage();
+            print "Erreur%" . $ex->getMessage() . "%" . json_encode($tabFraisTraites);
         }
     }
 }
@@ -251,7 +251,7 @@ function updateLigneFraisForfaitise($mPDO, $idVisiteur, $dateFrais, $unTypeDeFra
                                     $qteFrais) 
 {
     $requete = $mPDO->prepare(
-            "UPDATE lgnefraisforfait "
+            "UPDATE lignefraisforfait "
             . "SET quantite = :qteFrais "
             . "WHERE idvisiteur = :idVisiteur "
             . "AND mois = :dateFrais "
